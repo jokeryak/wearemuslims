@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="light">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="ইসলামিক ড্যাশবোর্ড - নামাজের সময়, কুরআনের আয়াত, হাদিস ও কিবলা নির্দেশক" />
+    <title>নূরুল ইসলাম — ইসলামিক ড্যাশবোর্ড</title>
+
+    <!-- Google Fonts: Amiri (Arabic), Noto Sans Bengali -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Sans+Bengali:wght@300;400;500;600;700&family=Cinzel:wght@400;600&display=swap" rel="stylesheet" />
+
+    <!-- FontAwesome Free CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <div class="header-inner">
+            <div class="brand">
+                <span class="brand-arabic">نُورُ الإِسْلَام</span>
+                <span class="brand-bn">ইসলামিক ড্যাশবোর্ড</span>
+            </div>
+            <div class="header-actions">
+                <!-- Hijri Date Badge -->
+                <div class="hijri-badge" id="hijri-badge">
+                    <i class="fas fa-moon"></i>
+                    <span id="hijri-text">লোড হচ্ছে...</span>
+                </div>
+                <!-- Dark/Light Mode Toggle -->
+                <button class="theme-btn" id="theme-toggle" title="থিম পরিবর্তন করুন" aria-label="থিম টগল">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container" role="main">
+
+        <!-- ===== LOCATION BAR ===== -->
+        <section class="card location-bar" aria-label="লোকেশন নির্বাচন">
+            <div class="location-form">
+                <div class="input-group">
+                    <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                    <input
+                        type="text"
+                        id="city-input"
+                        placeholder="শহরের নাম (যেমন: Dhaka)"
+                        aria-label="শহরের নাম"
+                    />
+                    <input
+                        type="text"
+                        id="country-input"
+                        placeholder="দেশ (BD)"
+                        maxlength="2"
+                        aria-label="দেশের কোড"
+                    />
+                </div>
+                <div class="location-btns">
+                    <button id="search-btn" class="btn btn-primary" aria-label="অনুসন্ধান করুন">
+                        <i class="fas fa-search" aria-hidden="true"></i> অনুসন্ধান
+                    </button>
+                    <button id="auto-location-btn" class="btn btn-secondary" aria-label="অটো লোকেশন">
+                        <i class="fas fa-location-crosshairs" aria-hidden="true"></i> অটো লোকেশন
+                    </button>
+                </div>
+            </div>
+            <p id="location-status" class="location-status" role="status" aria-live="polite"></p>
+        </section>
+
+        <!-- ===== PRAYER TIMES ===== -->
+        <section aria-label="নামাজের সময়সূচি">
+            <h2 class="section-title">
+                <i class="fas fa-mosque" aria-hidden="true"></i> আজকের নামাজের সময়সূচি
+            </h2>
+            <!-- Prayer cards injected by JS -->
+            <div id="prayer-times-grid" class="prayer-grid" role="list">
+                <div class="loading-placeholder" style="grid-column:1/-1">
+                    <div class="spinner" role="status" aria-label="লোড হচ্ছে"></div>
+                    <p>নামাজের সময় লোড হচ্ছে...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== QURAN + HADITH (two-column) ===== -->
+        <div class="two-col">
+
+            <!-- Quran Ayah of the Day -->
+            <section class="card quran-card" aria-label="আজকের আয়াত">
+                <div class="card-header">
+                    <h2><i class="fas fa-book-open" aria-hidden="true"></i> আজকের আয়াত</h2>
+                </div>
+                <div class="card-body" id="quran-content">
+                    <div class="loading-placeholder">
+                        <div class="spinner" role="status" aria-label="লোড হচ্ছে"></div>
+                        <p>আয়াত লোড হচ্ছে...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Hadith of the Day -->
+            <section class="card hadith-card" aria-label="আজকের হাদিস">
+                <div class="card-header">
+                    <h2><i class="fas fa-feather-alt" aria-hidden="true"></i> আজকের সহীহ হাদিস</h2>
+                </div>
+                <div class="card-body" id="hadith-content">
+                    <div class="loading-placeholder">
+                        <div class="spinner" role="status" aria-label="লোড হচ্ছে"></div>
+                        <p>হাদিস লোড হচ্ছে...</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- ===== QIBLA COMPASS ===== -->
+        <section class="card qibla-card" aria-label="কিবলা নির্দেশক">
+            <div class="card-header">
+                <h2><i class="fas fa-compass" aria-hidden="true"></i> কিবলা নির্দেশক</h2>
+            </div>
+            <div class="card-body" id="qibla-content">
+                <div class="loading-placeholder">
+                    <i class="fas fa-location-dot fa-2x" style="color:var(--text-muted);opacity:0.5" aria-hidden="true"></i>
+                    <p>কিবলা দেখতে উপরে লোকেশন দিন।</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer" role="contentinfo">
+        <p class="footer-arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+        <p class="footer-sub">
+            নামাজের সময়: <a href="https://aladhan.com" target="_blank" rel="noopener">Aladhan API</a> &bull;
+            কুরআন: <a href="https://alquran.cloud" target="_blank" rel="noopener">AlQuran Cloud</a> &bull;
+            সম্পূর্ণ বিনামূল্যে
+        </p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
